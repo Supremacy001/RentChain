@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "RentChain"
+description = "A responsive college marketplace for renting and sharing everyday products, with local demo state for browsing, rentals, returns, and owned listings."
+version = "1.0.0"
+id = "artifacts/rentchain"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23256
+
+[services.development]
+run = "pnpm --filter @workspace/rentchain run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/rentchain", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/rentchain/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23256"
+BASE_PATH = "/"
